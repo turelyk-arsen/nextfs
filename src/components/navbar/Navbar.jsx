@@ -1,6 +1,8 @@
 "use client"
 import Link from "next/link";
 import styles  from "./page.module.css";
+import Image from "next/image";
+import logo from 'public/download1.png'
 
 const links = [
   {
@@ -39,7 +41,7 @@ const Navbar = () => {
   return (
     <nav className={styles.container}>
       <Link href="/" className={styles.logo}>
-        MyApp
+        <Image src={logo} alt="Logo" width={200} height={50} />
       </Link>
       <div className={styles.links}>
         {links.map((link) => (
