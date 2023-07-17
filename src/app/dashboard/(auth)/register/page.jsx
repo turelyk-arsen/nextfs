@@ -15,7 +15,7 @@ const Register = () => {
     const password = e.target[2].value;
 
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const Register = () => {
           password,
         }),
       });
-      res.status === 201 && router.push("/dashboard/login?success=Account has been created")
+      res.status === 201 && router.push(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/login?success=Account has been created`)
     } catch (error) {
       setError(error);
     }

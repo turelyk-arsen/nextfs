@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, mutate, error, isLoading } = useSWR(
-    `/api/posts?username=${session?.data?.user.name}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/posts?username=${session?.data?.user.name}`,
     fetcher
   );
   // console.log(data);
@@ -54,7 +54,7 @@ const Dashboard = () => {
     const content = e.target[3].value;
 
     try {
-      await fetch("/api/posts", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
         method: "POST",
         body: JSON.stringify({
           title,
@@ -73,7 +73,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`/api/posts/${id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/${id}`, {
         method: "DELETE",
       });
       mutate()
