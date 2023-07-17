@@ -1,8 +1,11 @@
 "use client";
+import { useSession } from "next-auth/react";
 // import React, { useState, useEffect } from "react";
 import useSWR from "swr";
 
 const Dashboard = () => {
+  const session = useSession()
+  console.log(session);
   // const [data, setData] = useState([]);
   // const [error, setError] = useState(false);
   // const [isLoading, setIsLoading] = useState(true);

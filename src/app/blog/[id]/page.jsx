@@ -9,6 +9,15 @@ async function getData(id) {
   return res.json();
 }
 
+export async function generateMetadata({params}) {
+  const metadata = await getData(params.id)
+  return {
+  title: metadata.title,
+  description: metadata.desc,
+};
+}
+
+
 const BlogId = async ({params}) => {
   const data = await getData(params.id);
   return (
