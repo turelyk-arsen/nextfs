@@ -1,17 +1,22 @@
+
 import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-async function getData() {
+export async function getStaticProps() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {cache: 'no-store'});
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-  return res.json();
+  const data = await res.json();
+  return {
+    props: {
+      data
+    }
+  }
 }
 
-const Blog = async () => {
-  const data = await getData();
+const Blog = ({ data }) => {
   return (
     <div className={styles.mainContainer}>
       {data.map((item) => (
