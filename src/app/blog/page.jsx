@@ -1,4 +1,3 @@
-
 import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,20 +19,22 @@ const Blog = ({ data }) => {
   return (
     <div className={styles.mainContainer}>
       {data.map((item) => (
-        <Link href={`blog/${item._id}`} className={styles.container} key={item._id}>
-          <div className={styles.imageContainer}>
-            <Image
-              src={item.img}
-              alt=""
-              className={styles.image}
-              width={400}
-              height={250}
-            />
-          </div>
-          <div className={styles.content}>
-            <h1 className={styles.title}>{item.title}</h1>
-            <p className={styles.desc}>{item.desc}</p>
-          </div>
+        <Link href={`blog/${item._id}`} key={item._id}>
+          <a className={styles.container}>
+            <div className={styles.imageContainer}>
+              <Image
+                src={item.img}
+                alt=""
+                className={styles.image}
+                width={400}
+                height={250}
+              />
+            </div>
+            <div className={styles.content}>
+              <h1 className={styles.title}>{item.title}</h1>
+              <p className={styles.desc}>{item.desc}</p>
+            </div>
+          </a>
         </Link>
       ))}
     </div>

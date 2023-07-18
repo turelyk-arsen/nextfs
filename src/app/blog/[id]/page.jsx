@@ -1,50 +1,44 @@
-import styles from './page.module.css'
-import Image from 'next/image'
+import styles from "./page.module.css";
+import Link from "next/link";
+import Image from "next/image";
 
-async function getData(id) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts/${id}`, {cache: 'no-store'});
+export async function getServerSideProps() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {cache: 'no-store'});
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-  return res.json();
-}
-
-export async function getServerSideProps({ params }) {
-  const data = await getData(params.id);
+  const data = await res.json();
   return {
     props: {
-      data,
-    },
-  };
+      data
+    }
+  }
 }
 
-const BlogId = ({ data }) => {
+const Blog = ({ data }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        <div className={styles.info}>
-          <h1 className={styles.title}>{data.title}</h1>
-          <p className={styles.desc}>{data.desc}</p>
-          <div className={styles.author}>
-            <Image
-              src={data.img}
-              alt=""
-              width={40}
-              height={40}
-              className={styles.avatar}
-            />
-            <span className={styles.username}>{data.username}</span>
-          </div>
-        </div>
-        <div className={styles.imageContainer}>
-          <Image src={data.img} alt="" fill={true} className={styles.image} />
-        </div>
-      </div>
-      <div className={styles.content}>
-        <p className={styles.text}>{data.content}</p>
-      </div>
+    <div className={styles.mainContainer}>
+      {data.map((item) => (
+        <Link href={`blog/${item._id}`} key={item._id}>
+          <a className={styles.container}>
+            <div className={styles.imageContainer}>
+              <Image
+                src={item.img}
+                alt=""
+                className={styles.image}
+                width={400}
+                height={250}
+              />
+            </div>
+            <div className={styles.content}>
+              <h1 className={styles.title}>{item.title}</h1>
+              <p className={styles.desc}>{item.desc}</p>
+            </div>
+          </a>
+        </Link>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default BlogId
+export default Blog;
